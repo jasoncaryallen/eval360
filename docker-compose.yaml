@@ -12,7 +12,7 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U rockwood -h db -p 5432 -d eval360_development"]
+      test: ["CMD-SHELL", "pg_isready -U eval360 -h db -p 5432 -d eval360_development"]
       interval: 5s
       timeout: 5s
       retries: 5
