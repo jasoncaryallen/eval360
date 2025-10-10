@@ -5,7 +5,7 @@ services:
     image: postgres:13
     environment:
       POSTGRES_DB: eval360_development
-      POSTGRES_USER: rockwood
+      POSTGRES_USER: eval360
       POSTGRES_PASSWORD: password
     volumes:
       - ./db_data:/var/lib/postgresql/data
@@ -30,4 +30,4 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgres://rockwood:password@db:5432/eval360_development
+      RAILS_ENV: development
