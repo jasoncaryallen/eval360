@@ -4,8 +4,7 @@ ruby '2.7.8'
 gem 'rails', '~>5.2'
 gem 'pg', '~>1.5.9' # latest for Postgres >= 10
 gem 'jquery-rails'
-gem 'coffee-rails'
-gem 'sass-rails'
+gem 'sass-rails' # only used by activeadmin and no longer required upstream
 gem 'ffi', '~>1.16.0' # pinning during upgrade until we can drop sassc
 gem 'uglifier'
 gem 'slim-rails'
