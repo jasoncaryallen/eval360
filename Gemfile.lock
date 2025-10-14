@@ -225,7 +225,7 @@ GEM
       shellany (~> 0.0)
     orm_adapter (0.5.0)
     pdf-core (0.9.0)
-    pg (0.21.0)
+    pg (1.5.9)
     polyamorous (2.3.0)
       activerecord (>= 5.0)
     prawn (2.4.0)
@@ -412,13 +412,13 @@ DEPENDENCIES
   jquery-rails
   mandrill-api
   newrelic_rpm
-  pg (~> 0.21.0)
+  pg (~> 1.5.9)
   prawn
   pry
   rack-mini-profiler
   rails (~> 5.2)
   rails-controller-testing
-  rails-html-sanitizer (>= 1.0.4)
+  rails-html-sanitizer
   rails_serve_static_assets
   rake
   render_async
@@ -426,7 +426,7 @@ DEPENDENCIES
   rspec-rails (~> 3.7)
   rubyzip
   sass-rails
-  shoulda-callback-matchers (~> 1.0)
+  shoulda-callback-matchers
   shoulda-matchers
   simplecov
   slim-rails
