@@ -1,10 +1,7 @@
-module Mandrill
-  class Messages 
-
-    def send arg1, arg2
-      #do not call mandrill api
+module MailchimpTransactional
+  class MessagesApi
+    def send(_body)
+      # do not call mandrill api
     end
-
   end
 end
-

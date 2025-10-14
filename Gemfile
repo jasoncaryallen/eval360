@@ -13,7 +13,7 @@ gem 'turbolinks'
 gem 'devise'
 gem 'activeadmin', '~>2.9.0' # 2.10 drops support for Rails 5.2
 gem 'active_record-acts_as'
-gem 'mandrill-api'
+gem 'MailchimpTransactional'
 gem 'formtastic', '~> 3.1.5' # 4.0 drops support for Rails 5.2 (4 -> Rails 6, 5 -> Rails 7)
 gem 'formtastic-bootstrap'
 gem "cocoon"

@@ -30,7 +30,7 @@ describe EvaluationEmailer do
     # end
 
     # it 'emails the zip file' do
-    #   mandrill = Mandrill::API.new "test"
+    #   mandrill = MailchimpTransactional::Client.new "test"
     #   allow(EvaluationEmailer).to receive(:mandrill) { mandrill }
     #   expect(mandrill).to receive_message_chain(:messages, :send)
     # end

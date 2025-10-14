@@ -1,4 +1,4 @@
-require 'mandrill'
+require 'MailchimpTransactional'
 require 'rubygems'
 require 'zip'
 class EvaluationEmailer
@@ -43,7 +43,7 @@ class EvaluationEmailer
         ]
         
       }
-      mandrill.messages.send(message, true)
+      mandrill.messages.send(message: message, async: true)
       FileUtils.rm_rf(dir)
     end
     handle_asynchronously :send_pdf_reports
@@ -106,7 +106,7 @@ class EvaluationEmailer
     end
 
     def self.send_template(template_name, message)
-      results = mandrill.messages.send_template(template_name, [], message, true)
+      results = mandrill.messages.send_template(template_name: template_name, template_content: [{}], message: message, async: true)
       sent_count = 0
       results.each do |result|
         if result['status'] == 'sent'
@@ -119,7 +119,7 @@ class EvaluationEmailer
     end
 
     def self.mandrill
-      mandrill = Mandrill::API.new ENV['MANDRILL_APIKEY']
+      MailchimpTransactional::Client.new ENV['MANDRILL_APIKEY']
     end
     def self.generate_message(evaluations)
       participant = evaluations.first.participant
