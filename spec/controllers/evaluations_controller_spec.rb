@@ -15,7 +15,7 @@ RSpec.describe EvaluationsController, :type => :controller do
 
       it "returns http success" do
         get :edit, params: { evaluation_id: @evaluation.access_key }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
 
       context 'when evaluation has not been completed' do

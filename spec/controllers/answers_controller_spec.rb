@@ -14,7 +14,7 @@ RSpec.describe AnswersController, :type => :controller do
     end
 
     it "returns http success" do
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 end

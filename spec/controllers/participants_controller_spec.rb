@@ -16,7 +16,7 @@ RSpec.describe ParticipantsController, :type => :controller do
       end
 
       it 'renders http success' do
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end
@@ -75,7 +75,7 @@ RSpec.describe ParticipantsController, :type => :controller do
       it 'returns a status of success' do
         allow(EvaluationEmailer).to receive(:send_peer_reminders)
         post :send_reminders, params: { id: @participant.access_key }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end
