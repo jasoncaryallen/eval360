@@ -6,6 +6,7 @@ gem 'pg', '~>1.5.9' # latest for Postgres >= 10
 gem 'jquery-rails'
 gem 'coffee-rails'
 gem 'sass-rails'
+gem 'ffi', '~>1.16.0' # pinning during upgrade until we can drop sassc
 gem 'uglifier'
 gem 'slim-rails'
 gem 'turbolinks'
@@ -41,9 +42,9 @@ end
 
 group :development, :test do
   gem "bullet"
-  gem 'dotenv-rails', '~>2.2.2' # we should be able to go to ~>2.2. 3 -> Rails 6+
+  gem 'dotenv-rails', '~>2.2' # 3 -> Rails 6+
   gem 'pry'
-  gem 'rspec-rails', '~> 3.7' # 5 drops support for Rails 5, 6 -> Rails 6.1 -> 7.0, 6.1 -> 7.1, 7 -> 7.2, 8 -> 8
+  gem 'rspec-rails', '~> 4.0' # 5 drops support for Rails 5, 6 -> Rails 6.1 to 7.0, 6.1 -> 7.1, 7 -> 7.2, 8 -> 8
   gem "factory_bot_rails", require: false
 end
 
