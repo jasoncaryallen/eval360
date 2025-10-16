@@ -10,15 +10,15 @@ gem 'uglifier'
 gem 'slim-rails'
 gem 'turbolinks'
 gem 'devise'
-gem 'activeadmin', '~>2.9.0' # 2.10 drops support for Rails 5.2
+gem 'activeadmin'
 gem 'active_record-acts_as'
 gem 'MailchimpTransactional'
-gem 'formtastic', '~> 3.1.5' # 4.0 drops support for Rails 5.2 (4 -> Rails 6, 5 -> Rails 7)
+gem 'formtastic', '~> 3.1.5' # formtastic-bootstrap stopped development against 3.x :(
 gem 'formtastic-bootstrap'
 gem "cocoon"
 gem 'bugsnag'
 gem 'prawn'
-gem 'delayed_job_active_record', '4.1.4' # this seems unused
+gem 'delayed_job_active_record'
 gem 'rubyzip'
 gem 'restforce'
 gem 'newrelic_rpm'
@@ -41,9 +41,9 @@ end
 
 group :development, :test do
   gem "bullet"
-  gem 'dotenv-rails', '~>2.2' # 3 -> Rails 6+
+  gem 'dotenv-rails'
   gem 'pry'
-  gem 'rspec-rails', '~> 4.0' # 5 drops support for Rails 5, 6 -> Rails 6.1 to 7.0, 6.1 -> 7.1, 7 -> 7.2, 8 -> 8
+  gem 'rspec-rails'
   gem "factory_bot_rails", require: false
 end
 
