@@ -8,9 +8,7 @@ Bundler.require(*Rails.groups)
 
 module Eval360
   class Application < Rails::Application
-    config.load_defaults 5.1
-
-    config.autoloader = :zeitwerk
+    config.load_defaults 6.0
 
     config.generators do |g|
       g.view_specs false
