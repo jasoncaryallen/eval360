@@ -32,7 +32,7 @@ RSpec.describe ReportsController, :type => :controller do
       end
 
       it 'creates a LOI report' do
-        expect(LOIReport).to receive(:new).with(participant)
+        expect(LoiReport).to receive(:new).with(participant)
         get :show, params: { participant_id: access_key }
       end
     end

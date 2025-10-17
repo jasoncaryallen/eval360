@@ -10,6 +10,8 @@ module Eval360
   class Application < Rails::Application
     config.load_defaults 5.1
 
+    config.autoloader = :zeitwerk
+
     config.generators do |g|
       g.view_specs false
       g.helper_specs false

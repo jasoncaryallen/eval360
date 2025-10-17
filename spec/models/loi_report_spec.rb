@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LOIReport, :type => :model do
+RSpec.describe LoiReport, :type => :model do
   let(:section1) { FactoryBot.create(:section, header: 'Eagles') }
   let(:section2) { FactoryBot.create(:section, header: 'Patriots') }
   let(:questionnaire) { FactoryBot.create(:questionnaire) }
@@ -14,7 +14,7 @@ RSpec.describe LOIReport, :type => :model do
                                       name: 'SuperBowl') }
   let(:participant) { FactoryBot.create(:participant, training: training) }
 
-  subject { LOIReport.new(participant) }
+  subject { LoiReport.new(participant) }
 
   it { expect(subject.class).to be < Report }
 

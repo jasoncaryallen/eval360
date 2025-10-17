@@ -1,4 +1,4 @@
-class LOIReport < Report
+class LoiReport < Report
   def initialize(participant)
     super(participant)
     sections

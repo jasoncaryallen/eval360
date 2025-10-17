@@ -1,5 +1,5 @@
 module AccessKeys
-  extend ActiveSupport::Concerns
+  extend ActiveSupport::Concern
 
 
   def to_param

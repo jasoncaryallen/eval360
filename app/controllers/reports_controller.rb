@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
 
   def show
     if participant.training.questionnaire.name == Rails.configuration.x.loi
-      @report = LOIReport.new(participant)
+      @report = LoiReport.new(participant)
       render 'loi_report'
     else
       @report = Report.new(participant)
