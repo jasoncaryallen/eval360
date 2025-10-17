@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 ruby '2.7.8'
-gem 'rails', '~>6.0.0'
-gem 'concurrent-ruby', '1.3.4' # pinning during upgrade https://stackoverflow.com/a/79361034
+gem 'rails', '~>6.1'
+gem 'concurrent-ruby', '1.3.4' # pinning during upgrade until Rails 7.1 https://stackoverflow.com/a/79361034
 gem 'pg', '~>1.5.9' # latest for Postgres >= 10
 gem 'jquery-rails'
 gem 'sass-rails' # only used by activeadmin and no longer required upstream
@@ -36,7 +36,7 @@ group :development do
   gem 'rack-mini-profiler'
   gem 'thin'
   gem 'guard-rspec', require: false
-  gem "spring"
+  gem "spring", '4.2.1' # pinning during upgrade until Rails 7.0.1 https://github.com/rails/spring/issues/734
   gem "spring-commands-rspec"
 end
 
