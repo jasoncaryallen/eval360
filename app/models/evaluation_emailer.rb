@@ -19,7 +19,7 @@ class EvaluationEmailer
         end
       end
       zipfile_name = "#{Rails.root}/tmp/pdfs/#{training_id}.zip"
-      Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
+      Zip::File.open(zipfile_name, create: true) do |zipfile|
         input_filenames.each do |filename|
           zipfile.add(filename, folder + '/' + filename)
         end
