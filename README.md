@@ -88,3 +88,33 @@ OPTIONAL IF ENCOUNTERING MIGRATION OR SCHEMA ISSUES
 1. `bin/rails db` to get to a postgres prompt
 1. In postgres: `INSERT INTO ar_internal_metadata ("key", "value", "created_at", "updated_at")
 VALUES ('environment', 'development', now(), now()) RETURNING "key";`
+
+### Regression test plan
+
+When this application is upgraded, we need to ensure proper functioning. These are the app surfaces that we will test
+
+1.  Active Admin pages:
+    1.  Login
+    1.  Trainings
+        1.  CSV download of scores
+        1.  Edit and delete pages
+        1.  Participants
+            1.  Viewing self
+            1.  Downloading self PDF
+            1.  Send peer reminders
+            1.  View assessment report
+                1.  When assessment is "YearlongIndividual" this renders a different template without the quartile (although quartile still shows as 0 in pdf report (probably a bug))
+            1.  Peer assessments
+                1.  View assessment
+    1.  Assessments
+        1.  Edit and save questions
+    1.  Admin Users
+1.  Participant frontend
+    1.  Grab an assessment URL from an admin self or peer evaluation page
+    1.  Fill out form
+    1.  This enables report QA in the admin interface, and downloading pdf reports
+1.  DelayedJobs
+    1.  Creating and completing trainings generates salesforce jobs
+    1.  You can generate an EvaluationEmailer.send_pdf_reports job with the input on a training's page
+    1.  You can check the db records if you want
+    1.  run the `jobs:workoff` task to see them run
