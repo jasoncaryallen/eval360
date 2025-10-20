@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 ruby "3.0.7"
-gem "rails", "~>6.1"
+gem "rails", "~>7.0.1"
 gem "concurrent-ruby", "1.3.4" # pinning during upgrade until Rails 7.1 https://stackoverflow.com/a/79361034
 gem "pg", "~>1.5.9" # latest for Postgres >= 10
 gem "jquery-rails"
