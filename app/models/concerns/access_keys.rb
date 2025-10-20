@@ -8,8 +8,9 @@ module AccessKeys
   def set_access_key
     return if access_key.present?
 
-    begin
+    loop do
       self.access_key = SecureRandom.hex(8)
-    end while self.class.exists?(access_key: access_key)
+      break unless self.class.exists?(access_key: access_key)
+    end
   end
 end

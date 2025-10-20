@@ -38,21 +38,15 @@ class Training < ActiveRecord::Base
   end
 
   def formatted_deadline
-    if deadline
-      deadline.strftime("%B %e, %Y")
-    end
+    deadline&.strftime("%B %e, %Y")
   end
 
   def formatted_start_date
-    if start_date
-      start_date.strftime("%B %e, %Y")
-    end
+    start_date&.strftime("%B %e, %Y")
   end
 
   def formatted_end_date
-    if end_date
-      end_date.strftime("%B %e, %Y")
-    end
+    end_date&.strftime("%B %e, %Y")
   end
 
   private

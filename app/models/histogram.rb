@@ -50,7 +50,7 @@ class Histogram
   end
 
   def quartile_rank(score, all_scores)
-    lower_scores = all_scores.select { |value| !value.nil? && value < score }.size
+    lower_scores = all_scores.count { |value| !value.nil? && value < score }
     return 4 if lower_scores.zero?
     quartile_size = all_scores.size.to_f / 4.0
     if lower_scores > quartile_size * 3

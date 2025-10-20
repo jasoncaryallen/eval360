@@ -4,10 +4,8 @@ class ParticipantsController < ApplicationController
 
   def invitations
     10.times { @participant.evaluators.build }
-    if flash[:emails]
-      flash[:emails].each_with_index do |email, i|
-        @participant.evaluators[i].email = email
-      end
+    flash[:emails]&.each_with_index do |email, i|
+      @participant.evaluators[i].email = email
     end
     render "invitations"
   end

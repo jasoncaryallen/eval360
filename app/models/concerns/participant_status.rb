@@ -41,7 +41,7 @@ module ParticipantStatus
     end
 
     client = Restforce.new
-    participant_url = "http://#{Rails.application.config.action_mailer.default_url_options[:host]}" +
+    participant_url = "http://#{Rails.application.config.action_mailer.default_url_options[:host]}" \
       "/admin/trainings/#{training.id}/participants/#{access_key}"
 
     client.update("Registration__c", Id: sf_registration_id,

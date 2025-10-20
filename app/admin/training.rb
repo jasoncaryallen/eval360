@@ -19,10 +19,10 @@ ActiveAdmin.register Training do
       "#{training.city}, #{training.state}"
     end
     column "Start Date" do |training|
-      training.start_date.strftime("%b %d %Y") if training.start_date
+      training.start_date&.strftime("%b %d %Y")
     end
     column "End Date" do |training|
-      training.end_date.strftime("%b %d %Y") if training.end_date
+      training.end_date&.strftime("%b %d %Y")
     end
     column :status
     column "Actions" do |training|
@@ -66,17 +66,17 @@ ActiveAdmin.register Training do
     attributes_table do
       row :name
       row "Start Date" do |training|
-        training.start_date.strftime("%b %d %Y") if training.start_date
+        training.start_date&.strftime("%b %d %Y")
       end
       row "End Date" do |training|
-        training.end_date.strftime("%b %d %Y") if training.end_date
+        training.end_date&.strftime("%b %d %Y")
       end
       row "Location" do
         "#{training.city}, #{training.state}"
       end
       row :status
       row "Deadline" do
-        training.deadline.strftime("%b %d %Y") if training.deadline
+        training.deadline&.strftime("%b %d %Y")
       end
       row :curriculum
       row :site_name

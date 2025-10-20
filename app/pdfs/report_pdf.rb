@@ -39,9 +39,8 @@ class ReportPdf < Prawn::Document
   def print_section_header(section)
     unless section.header.blank? || section.header.nil?
       bounding_box [0, @block_start + 5], width: PAGE_WIDTH do
-        text "#{section.header}", style: :bold, size: 14
-        for_individual_program = (@participant.training.questionnaire.name == "YearlongIndividual") ? true : false
-        if for_individual_program
+        text section.header.to_s, style: :bold, size: 14
+        if @participant.training.questionnaire.name == "YearlongIndividual"
           section_mean = @results.mean_score_for_s(section)
           text("Average score for this section: #{section_mean}", size: 12) unless section_mean.nil?
         end
@@ -164,7 +163,7 @@ class ReportPdf < Prawn::Document
   def draw_histogram(histogram)
     line_width(2)
     1.upto(10) do |x|
-      draw_text "#{x}", at: [LAYOUT_SCALE * x, LAYOUT_LINE * 5]
+      draw_text x.to_s, at: [LAYOUT_SCALE * x, LAYOUT_LINE * 5]
       if histogram[x] > 0
         draw_text "{#{histogram[x]}}", at: [LAYOUT_SCALE * x, LAYOUT_LINE * 6], style: :bold, size: 10
       end
