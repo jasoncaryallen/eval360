@@ -9,24 +9,24 @@ class Report
   def initialize(participant)
     @participant = participant
     questions
-    @peer_numeric_responses = Answer.joins(:evaluation, :question).
-      where(:evaluations => { self_eval: false,
-                             participant_id: participant.id,
-                             completed: true },
-            :questions => { id: questions.pluck(:id),
-                           answer_type: 'numeric' }).
-      where.not(numeric_response: 0).
-      where.not(numeric_response: nil)
+    @peer_numeric_responses = Answer.joins(:evaluation, :question)
+      .where(evaluations: {self_eval: false,
+                           participant_id: participant.id,
+                           completed: true},
+        questions: {id: questions.pluck(:id),
+                    answer_type: "numeric"})
+      .where.not(numeric_response: 0)
+      .where.not(numeric_response: nil)
     mean_scores
     @results = EvaluationResults.new(participant)
   end
 
   def questions
-    @questions ||= Question.
-      joins(:answers).
-      includes(:section).
-      where(answers: {evaluation_id: participant.self_evaluation.id}).
-      order(created_at: :asc)
+    @questions ||= Question
+      .joins(:answers)
+      .includes(:section)
+      .where(answers: {evaluation_id: participant.self_evaluation.id})
+      .order(created_at: :asc)
   end
 
   def training_name
@@ -56,12 +56,12 @@ class Report
       end
       save_mean_scores(mean_score, q.id)
     end
-    @mean_scores.sort! { |a,b| b[:mean_score] <=> a[:mean_score] }
+    @mean_scores.sort! { |a, b| b[:mean_score] <=> a[:mean_score] }
     @mean_scores = @mean_scores.uniq
   end
 
   def mean_score(answers)
-    answers.sum.to_f/answers.length
+    answers.sum.to_f / answers.length
   end
 
   def save_mean_scores(mean_score, question_id)

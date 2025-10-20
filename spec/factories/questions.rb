@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :question do
-    answer_type {"numeric"}
-    description {"Please rate your friend 1-4"}
-    self_description {"Please rate yourself 1-4"}
+    answer_type { "numeric" }
+    description { "Please rate your friend 1-4" }
+    self_description { "Please rate yourself 1-4" }
     association :section
 
     factory :text_question do

@@ -17,16 +17,16 @@ Rails.application.configure do
   config.eager_load = false
 
   config.serve_static_files = true
-  config.static_cache_control = 'public, max-age=3600'
+  config.static_cache_control = "public, max-age=3600"
 
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
   config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=#{1.hour.to_i}"
+    "Cache-Control" => "public, max-age=#{1.hour.to_i}"
   }
 
   # Show full error reports and disable caching.
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
@@ -42,14 +42,13 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = {host: "localhost", port: 3000}
 
   config.after_initialize do
     Bullet.enable = true
     Bullet.bullet_logger = true
     Bullet.raise = true # raise an error if n+1 query occurs
   end
-
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :raise

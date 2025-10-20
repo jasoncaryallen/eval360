@@ -1,11 +1,10 @@
-#https://github.com/thoughtbot/factory_bot/wiki/Testing-all-Factories-(with-RSpec)
-require 'rails_helper' 
+# https://github.com/thoughtbot/factory_bot/wiki/Testing-all-Factories-(with-RSpec)
+require "rails_helper"
 
 # If using RSpec 2.x, remove `RSpec.`
 RSpec.describe "Factory Bot" do
   FactoryBot.factories.map(&:name).each do |factory_name|
     describe "#{factory_name} factory" do
-
       # Test each factory
       it "is valid" do
         factory = FactoryBot.build(factory_name)
@@ -26,7 +25,6 @@ RSpec.describe "Factory Bot" do
           end
         end
       end
-
     end
   end
 end

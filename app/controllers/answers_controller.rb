@@ -1,13 +1,11 @@
 class AnswersController < ApplicationController
-
   def update
     answer = Answer.find(params[:answer_id])
     if answer.update!(answer_params)
-      render json: 'success', status: 200  
+      render json: "success", status: 200
     else
       puts answer.errors
     end
-
   end
 
   private
@@ -15,4 +13,4 @@ class AnswersController < ApplicationController
   def answer_params
     params.require(:answer).permit(:numeric_response, :text_response)
   end
-end 
+end

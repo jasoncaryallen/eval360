@@ -1,12 +1,12 @@
 class Training < ActiveRecord::Base
-  has_many :participants, -> { order "first_name ASC" }, inverse_of: :training, dependent: :destroy 
+  has_many :participants, -> { order "first_name ASC" }, inverse_of: :training, dependent: :destroy
   accepts_nested_attributes_for :participants
   belongs_to :questionnaire
 
   validates_presence_of :questionnaire
 
   def self.ransackable_attributes(auth_object = nil)
-    %w(name start_date end_date city state status)
+    %w[name start_date end_date city state status]
   end
 
   def self.send_self_eval_reminders
@@ -19,7 +19,7 @@ class Training < ActiveRecord::Base
     email_block do |participant|
       if participant.self_evaluation.completed? && participant.total_peer_evaluations.zero?
         participant.remind_to_add_peers
-      end 
+      end
     end
   end
 
@@ -33,25 +33,25 @@ class Training < ActiveRecord::Base
 
   def formatted_date
     if start_date && end_date
-      "#{start_date.strftime('%B %e')} - #{end_date.strftime('%e, %Y')}"
+      "#{start_date.strftime("%B %e")} - #{end_date.strftime("%e, %Y")}"
     end
   end
 
   def formatted_deadline
     if deadline
-      deadline.strftime('%B %e, %Y')
+      deadline.strftime("%B %e, %Y")
     end
   end
 
   def formatted_start_date
     if start_date
-      start_date.strftime('%B %e, %Y')
+      start_date.strftime("%B %e, %Y")
     end
   end
 
   def formatted_end_date
     if end_date
-      end_date.strftime('%B %e, %Y')
+      end_date.strftime("%B %e, %Y")
     end
   end
 
@@ -65,5 +65,4 @@ class Training < ActiveRecord::Base
       end
     end
   end
-
 end

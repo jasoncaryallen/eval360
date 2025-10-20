@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :evaluation do
     association :participant
     association :evaluator
-    sequence (:access_key) { |n| "access_key#{n}" }
-    
+    sequence(:access_key) { |n| "access_key#{n}" }
+
     factory :self_evaluation do
       after(:build) do |evaluation|
         evaluation.self_eval = true

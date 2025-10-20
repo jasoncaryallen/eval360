@@ -10,7 +10,6 @@ ActiveAdmin.register Training do
   filter :state
   filter :status
 
-
   config.sort_order = "start_date_desc"
   config.clear_action_items!
 
@@ -28,23 +27,23 @@ ActiveAdmin.register Training do
     column :status
     column "Actions" do |training|
       link_to "View", admin_training_path(training)
-    end 
+    end
     div do
       link_to "create new training", new_admin_training_path, class: "small-new"
     end
   end
 
-  form(:html => { :multipart => true}) do |f|
+  form(html: {multipart: true}) do |f|
     f.inputs "WARNING" do
       f.render partial: "admin/warning"
-    end 
+    end
     f.inputs "Training Details" do
       f.input :name
       f.input :start_date
       f.input :end_date
       f.input :city
       f.input :state
-      f.input :status, :as => :select, :collection => ["Planned", "On hold", "In progress", "Completed", "Cancelled"]
+      f.input :status, as: :select, collection: ["Planned", "On hold", "In progress", "Completed", "Cancelled"]
       f.input :questionnaire
       f.input :curriculum
       f.input :deadline
@@ -101,7 +100,7 @@ ActiveAdmin.register Training do
           participant.peer_evaluation_status
         end
         column "Actions" do |participant|
-          link_to("View", admin_training_participant_path(training, participant)) 
+          link_to("View", admin_training_participant_path(training, participant))
         end
       end
     end
@@ -114,10 +113,7 @@ ActiveAdmin.register Training do
       link_to "Edit Training", edit_admin_training_path(training)
     end
     div do
-      link_to("Delete Training", admin_training_path(training), data: { confirm: "WARNING: Are you sure you want to delete this training?" }, method: :delete)
+      link_to("Delete Training", admin_training_path(training), data: {confirm: "WARNING: Are you sure you want to delete this training?"}, method: :delete)
     end
-
   end
-
-
 end

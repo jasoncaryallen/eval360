@@ -5,12 +5,11 @@ class Section < ActiveRecord::Base
   accepts_nested_attributes_for :questions
   accepts_nested_attributes_for :questionnaire_templates, allow_destroy: true
 
-
   def self.generate_from_parsed_yaml(yaml)
     s = Section.create(header: yaml["header"])
     yaml["questions"].each do |question|
       s.questions << Question.generate_from_parsed_yaml(question)
     end
-    return s
+    s
   end
 end

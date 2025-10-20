@@ -1,26 +1,25 @@
 Rails.application.routes.draw do
-
   resources :evaluations do
     get :edit
     post :update
     get :peer_decline
-  end  
+  end
 
   resources :participants do
     post :update
-    get :evaluation_report, on: :member, defaults: { format: 'pdf' }
+    get :evaluation_report, on: :member, defaults: {format: "pdf"}
     resource :report, only: :show
   end
 
-  post '/trainings/:id/email_reports', to: 'trainings#email_reports'
+  post "/trainings/:id/email_reports", to: "trainings#email_reports"
 
   resources :answers do
     post :update
   end
 
-  get ':id/invitations', to: 'participants#invitations', as: :invitations
-  post ':id/send_reminders', to: 'participants#send_reminders', as: :send_reminders
-  get :histogram, :controller => :reports
+  get ":id/invitations", to: "participants#invitations", as: :invitations
+  post ":id/send_reminders", to: "participants#send_reminders", as: :send_reminders
+  get :histogram, controller: :reports
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -46,15 +45,13 @@ Rails.application.routes.draw do
       end
     end
   end
-  
 
-  root to: redirect('http://rockwoodleadership.org') 
-  get 'thank_you' => 'pages#thank_you'
-  get 'peer_decline' => 'pages#peer_decline'
+  root to: redirect("http://rockwoodleadership.org")
+  get "thank_you" => "pages#thank_you"
+  get "peer_decline" => "pages#peer_decline"
 
-  post 'salesforce_connector/new_participant'
-  post 'salesforce_connector/update_participant'
-  post 'salesforce_connector/new_training'
-  post 'salesforce_connector/update_training'
-  
+  post "salesforce_connector/new_participant"
+  post "salesforce_connector/update_participant"
+  post "salesforce_connector/new_training"
+  post "salesforce_connector/update_training"
 end

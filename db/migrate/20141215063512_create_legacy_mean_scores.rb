@@ -8,6 +8,6 @@ class CreateLegacyMeanScores < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    add_index(:legacy_mean_scores, :key, using: 'btree')
+    add_index(:legacy_mean_scores, :key, using: "btree")
   end
 end

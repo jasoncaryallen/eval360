@@ -20,7 +20,7 @@ module Eval360
       g.javascripts false
       g.helper false
       g.test_framework :rspec
-      g.factory_bot dir: '/spec/factories/'
+      g.factory_bot dir: "/spec/factories/"
     end
 
     config.serve_static_files = true

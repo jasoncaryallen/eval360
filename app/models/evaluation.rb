@@ -1,15 +1,16 @@
-require 'evaluation_emailer'
+require "evaluation_emailer"
 class Evaluation < ActiveRecord::Base
   include AccessKeys
+
   belongs_to :evaluator
   belongs_to :participant
-  has_many :answers, -> { includes(:question => :section).order("created_at ASC") }, dependent: :destroy
+  has_many :answers, -> { includes(question: :section).order("created_at ASC") }, dependent: :destroy
   has_many :questions, through: :answers
   validates_uniqueness_of :access_key
   validates_presence_of :participant
   validates_presence_of :evaluator
 
-  before_validation :set_access_key, on: :create 
+  before_validation :set_access_key, on: :create
   after_create :build_questions
   after_create :set_defaults
 
@@ -42,29 +43,28 @@ class Evaluation < ActiveRecord::Base
 
   def mark_complete
     self.completed = true
-    self.save
+    save
   end
 
   def not_accessible?
-    if (self.evaluator.declined? || participant.training.end_date == nil || DateTime.now > participant.training.end_date)
+    if evaluator.declined? || participant.training.end_date.nil? || DateTime.now > participant.training.end_date
       return true
     end
-    return false
+    false
   end
 
   private
-  
-    def build_questions
-      questions = participant.training.questionnaire.questions
-      questions.each do |question|
-        answers.create(numeric_response: nil, text_response: "", question: question)
-      end
-    end
 
-    def set_defaults
-      return if completed? 
-      self.completed = false
-      self.save
+  def build_questions
+    questions = participant.training.questionnaire.questions
+    questions.each do |question|
+      answers.create(numeric_response: nil, text_response: "", question: question)
     end
+  end
 
+  def set_defaults
+    return if completed?
+    self.completed = false
+    save
+  end
 end

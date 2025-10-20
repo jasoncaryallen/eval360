@@ -1,39 +1,38 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe ReportsController, :type => :controller do
-  
+RSpec.describe ReportsController, type: :controller do
   let(:participant) { FactoryBot.create(:participant) }
-  let(:access_key) {  participant.access_key }
+  let(:access_key) { participant.access_key }
 
   describe "GET show" do
-    it 'creates a new report' do
+    it "creates a new report" do
       expect(Report).to receive(:new).with(participant)
-      get :show, params: { participant_id: access_key }
+      get :show, params: {participant_id: access_key}
     end
 
-    it 'assigns the report' do
-      get :show, params: { participant_id: access_key }
+    it "assigns the report" do
+      get :show, params: {participant_id: access_key}
       expect(assigns(:report)).to_not be_nil
     end
 
-    it 'renders report show page' do
-      get :show, params: { participant_id: access_key }
-      expect(response).to render_template('show')
+    it "renders report show page" do
+      get :show, params: {participant_id: access_key}
+      expect(response).to render_template("show")
     end
 
-    context 'when training is Yearlong Individual' do
-      let(:questionnaire) { FactoryBot.create(:questionnaire, name: 'YearlongIndividual') }
+    context "when training is Yearlong Individual" do
+      let(:questionnaire) { FactoryBot.create(:questionnaire, name: "YearlongIndividual") }
       let(:training) { FactoryBot.create(:training, questionnaire: questionnaire) }
       let(:participant) { FactoryBot.create(:participant, training: training) }
 
-      it 'renders loi report page' do
-        get :show, params: { participant_id: access_key }
-        expect(response).to render_template('loi_report')
+      it "renders loi report page" do
+        get :show, params: {participant_id: access_key}
+        expect(response).to render_template("loi_report")
       end
 
-      it 'creates a LOI report' do
+      it "creates a LOI report" do
         expect(LoiReport).to receive(:new).with(participant)
-        get :show, params: { participant_id: access_key }
+        get :show, params: {participant_id: access_key}
       end
     end
   end
@@ -41,19 +40,19 @@ RSpec.describe ReportsController, :type => :controller do
   describe "GET histogram" do
     let(:question) { FactoryBot.create(:question) }
 
-    it 'creates a new histogram' do
+    it "creates a new histogram" do
       expect(Histogram).to receive(:new).with(participant, question)
-      get :histogram, params: { participant_id: access_key, question_id: question.id }
+      get :histogram, params: {participant_id: access_key, question_id: question.id}
     end
 
-    it 'assigns the histogram' do
-     get :histogram, params: { participant_id: access_key, question_id: question.id }
+    it "assigns the histogram" do
+      get :histogram, params: {participant_id: access_key, question_id: question.id}
       expect(assigns(:histogram)).to_not be_nil
     end
 
-    it 'renders histogram partial' do
-      get :histogram, params: { participant_id: access_key, question_id: question.id }
-      expect(response).to render_template(partial: '_histogram')
+    it "renders histogram partial" do
+      get :histogram, params: {participant_id: access_key, question_id: question.id}
+      expect(response).to render_template(partial: "_histogram")
     end
   end
 end

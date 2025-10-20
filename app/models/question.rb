@@ -9,9 +9,9 @@ class Question < ActiveRecord::Base
 
   def self.generate_from_parsed_yaml(parsed_yaml)
     Question.create(answer_type: parsed_yaml.first.include?("range") ? "numeric" : "text",
-                    description: parsed_yaml.last["text"],
-                    self_description: parsed_yaml.last["self_text"],
-                    legacy_tag: parsed_yaml.last["legacy_tag"])
+      description: parsed_yaml.last["text"],
+      self_description: parsed_yaml.last["self_text"],
+      legacy_tag: parsed_yaml.last["legacy_tag"])
   end
 
   def numeric?

@@ -2,33 +2,31 @@ ActiveAdmin.register Evaluation do
   controller do
     defaults finder: :find_by_access_key
     belongs_to :training do
-      belongs_to :participant, finder: :find_by_access_key, parent_class: :training 
+      belongs_to :participant, finder: :find_by_access_key, parent_class: :training
     end
   end
 
   config.filters = false
   navigation_menu :default
 
-  actions :all, :except => [:new, :edit]
+  actions :all, except: [:new, :edit]
   menu false
 
   breadcrumb do
     links = [
-              link_to('Admin', admin_root_path),
-              link_to('Trainings', admin_trainings_path),
-              link_to(training.name, admin_training_path(training)),
-              link_to('Participants', admin_training_participants_path(training)),
-              link_to(participant.full_name, admin_training_participant_path(training,participant))
-            ]
-    if controller.action_name == 'show'
-      links << link_to('Assessments', admin_training_participant_evaluations_path(training, participant))
+      link_to("Admin", admin_root_path),
+      link_to("Trainings", admin_trainings_path),
+      link_to(training.name, admin_training_path(training)),
+      link_to("Participants", admin_training_participants_path(training)),
+      link_to(participant.full_name, admin_training_participant_path(training, participant))
+    ]
+    if controller.action_name == "show"
+      links << link_to("Assessments", admin_training_participant_evaluations_path(training, participant))
     end
     links
   end
 
-  config.sort_order = 'created_at_asc'
-
-  
+  config.sort_order = "created_at_asc"
 
   member_action :reopen_evaluation, method: :get do
     evaluation = Evaluation.find_by_access_key(params[:id])
@@ -38,7 +36,7 @@ ActiveAdmin.register Evaluation do
     redirect_back fallback_location: root_path
   end
 
-  index do 
+  index do
     selectable_column
     column "Evaluator" do |evaluation|
       evaluation.evaluator.email
@@ -56,7 +54,7 @@ ActiveAdmin.register Evaluation do
     actions
   end
 
-  show :title => proc { |evaluation| evaluation.eval_type_str } do |evaluation|
+  show title: proc { |evaluation| evaluation.eval_type_str } do |evaluation|
     panel "Assessment Details" do
       attributes_table_for evaluation do
         row "Type" do
@@ -83,15 +81,14 @@ ActiveAdmin.register Evaluation do
     panel "Assessment Responses" do
       evaluation.answers.includes(:question).each_with_index do |answer, i|
         if evaluation.self_eval?
-          h5 "#{i+1}. #{answer.question.self_description}"
+          h5 "#{i + 1}. #{answer.question.self_description}"
         else
-          h5 "#{i+1}. #{answer.question.description}"
-        end 
-        div :class => "response" do
-          answer.response 
+          h5 "#{i + 1}. #{answer.question.description}"
+        end
+        div class: "response" do
+          answer.response
         end
       end
     end
   end
-
 end

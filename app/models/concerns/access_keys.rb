@@ -1,7 +1,6 @@
 module AccessKeys
   extend ActiveSupport::Concern
 
-
   def to_param
     access_key
   end
@@ -11,6 +10,6 @@ module AccessKeys
 
     begin
       self.access_key = SecureRandom.hex(8)
-    end while self.class.exists?(access_key: self.access_key)
+    end while self.class.exists?(access_key: access_key)
   end
 end

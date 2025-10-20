@@ -1,6 +1,6 @@
 class LoiReport < Report
   def initialize(participant)
-    super(participant)
+    super
     sections
     average_section_scores
   end
@@ -20,6 +20,7 @@ class LoiReport < Report
   def bottom_8_scores
     @mean_scores.last(8).reverse
   end
+
   private
 
   def average_section_scores
@@ -30,15 +31,14 @@ class LoiReport < Report
   end
 
   def get_section_score(section)
-    Answer.joins(:evaluation, :question).where(:evaluations => {self_eval: false,
-                                                     participant_id: participant.id,
-                                                     completed:true},
-                                               :questions => {section_id: section.id,
-                                                              answer_type: 'numeric'}).
-                                         where.not(numeric_response: 0).
-                                         where.not(numeric_response: nil).
-                                         calculate(:average, :numeric_response).
-                                         to_f.round(2)
-
+    Answer.joins(:evaluation, :question).where(evaluations: {self_eval: false,
+                                                             participant_id: participant.id,
+                                                             completed: true},
+      questions: {section_id: section.id,
+                  answer_type: "numeric"})
+      .where.not(numeric_response: 0)
+      .where.not(numeric_response: nil)
+      .calculate(:average, :numeric_response)
+      .to_f.round(2)
   end
 end

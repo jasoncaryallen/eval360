@@ -1,37 +1,37 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Answer, :type => :model do
+RSpec.describe Answer, type: :model do
   expect_it { to belong_to :question }
   expect_it { to belong_to :evaluation }
   expect_it { to validate_presence_of :evaluation }
   expect_it { to validate_presence_of :question }
-  
-  describe '#response' do
-    context 'when it is a numeric question' do
+
+  describe "#response" do
+    context "when it is a numeric question" do
       before do
         @answer = create(:answer)
       end
-      it 'returns not applicable for a non truthy values of numeric_response' do
+      it "returns not applicable for a non truthy values of numeric_response" do
         @answer.numeric_response = nil
         expect(@answer.response).to eq "not applicable"
       end
 
-      it 'returns the value for truthy values of numeric_response' do
+      it "returns the value for truthy values of numeric_response" do
         @answer.numeric_response = 9
         expect(@answer.response).to eq 9
       end
     end
 
-    context 'when it is a text question' do
+    context "when it is a text question" do
       before do
         @answer = create(:text_answer)
       end
-      it 'returns no response for non truthy values of text_Response' do
+      it "returns no response for non truthy values of text_Response" do
         @answer.text_response = nil
         expect(@answer.response).to eq "no response"
       end
 
-      it 'returns the value for truthy values of text_response' do
+      it "returns the value for truthy values of text_response" do
         @answer.text_response = "great"
         expect(@answer.response).to eq "great"
       end
@@ -45,11 +45,11 @@ RSpec.describe Answer, :type => :model do
       @answer.text_response = "great"
       @answer.set_default_values
     end
-    it 'sets numeric_response to nil' do
+    it "sets numeric_response to nil" do
       expect(@answer.numeric_response).to eq nil
     end
 
-    it 'sets text_response blank' do
+    it "sets text_response blank" do
       expect(@answer.text_response).to eq ""
     end
   end

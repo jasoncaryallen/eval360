@@ -10,12 +10,12 @@ ActiveAdmin.register Question do
   navigation_menu :default
   menu false
 
-  config.breadcrumb = false 
+  config.breadcrumb = false
 
   index do
     column "Question Text" do |question|
       question.description
-    end 
+    end
     column "Question Type" do |question|
       question.answer_type
     end
@@ -36,12 +36,10 @@ ActiveAdmin.register Question do
 
   form do |f|
     f.inputs "Details" do
-      f.input :answer_type, :as => :select, :collection => ["numeric", "text"]
+      f.input :answer_type, as: :select, collection: ["numeric", "text"]
       f.input :description
       f.input :self_description
     end
     f.actions
   end
-
-
 end

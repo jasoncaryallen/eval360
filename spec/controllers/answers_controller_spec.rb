@@ -1,14 +1,14 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe AnswersController, :type => :controller do
+RSpec.describe AnswersController, type: :controller do
   describe "POST update" do
     before(:each) do
       @answer = create(:answer)
       allow(Answer).to receive(:find) { @answer }
-      post :update, params: { id: @answer.id, answer: { "numeric_response" => "10" } }
+      post :update, params: {id: @answer.id, answer: {"numeric_response" => "10"}}
     end
 
-    it 'updates answer' do
+    it "updates answer" do
       @answer.reload
       expect(@answer.numeric_response).to eq 10
     end

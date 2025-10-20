@@ -1,5 +1,5 @@
 class ReportPdf < Prawn::Document
-  require 'prawn'
+  require "prawn"
   TOP_OF_PAGE = 775
   BOTTOM_OF_PAGE = 100
   BLOCK_HEIGHT = 130
@@ -12,20 +12,21 @@ class ReportPdf < Prawn::Document
   def initialize(participant)
     super()
     if font
-      self.font_families.update("DejaVuSans" => {
-        :normal => "vendor/assets/fonts/dejavu-sans/DejaVuSans.ttf",
-        :bold => "vendor/assets/fonts/dejavu-sans/DejaVuSansCondensed-Bold.ttf",
-        :bold_italic => "vendor/assets/fonts/dejavu-sans/DejaVuSans-BoldOblique.ttf",
-        :italic => "vendor/assets/fonts/dejavu-sans/DejaVuSans-Oblique.ttf"})
-        font "DejaVuSans"
+      font_families.update("DejaVuSans" => {
+        normal: "vendor/assets/fonts/dejavu-sans/DejaVuSans.ttf",
+        bold: "vendor/assets/fonts/dejavu-sans/DejaVuSansCondensed-Bold.ttf",
+        bold_italic: "vendor/assets/fonts/dejavu-sans/DejaVuSans-BoldOblique.ttf",
+        italic: "vendor/assets/fonts/dejavu-sans/DejaVuSans-Oblique.ttf"
+      })
+      font "DejaVuSans"
     end
     @participant = participant
     @questions = participant.self_evaluation.questions
     @results = EvaluationResults.new(participant)
     @mean_scores = []
     print_header
-    print_questions 
-    @mean_scores.sort! { |a,b| b[:mean_score] <=> a[:mean_score] }
+    print_questions
+    @mean_scores.sort! { |a, b| b[:mean_score] <=> a[:mean_score] }
     print_top_bottom_results
   end
 
@@ -37,12 +38,12 @@ class ReportPdf < Prawn::Document
 
   def print_section_header(section)
     unless section.header.blank? || section.header.nil?
-      bounding_box [0, @block_start+5], width: PAGE_WIDTH do
+      bounding_box [0, @block_start + 5], width: PAGE_WIDTH do
         text "#{section.header}", style: :bold, size: 14
-        for_individual_program = (@participant.training.questionnaire.name == 'YearlongIndividual') ? true : false
+        for_individual_program = (@participant.training.questionnaire.name == "YearlongIndividual") ? true : false
         if for_individual_program
           section_mean = @results.mean_score_for_s(section)
-          text("Average score for this section: #{section_mean}", size:12) unless section_mean.nil?
+          text("Average score for this section: #{section_mean}", size: 12) unless section_mean.nil?
         end
       end
       @block_start -= 120
@@ -75,13 +76,13 @@ class ReportPdf < Prawn::Document
     if @block_start < BOTTOM_OF_PAGE
       start_new_page
       print_header
-    end 
+    end
   end
 
   def print_top_bottom_results
     program_name = @participant.training.questionnaire.name
     start_new_page
-    if (program_name == 'YearlongIndividual' || program_name == 'YearlongPerformance')
+    if program_name == "YearlongIndividual" || program_name == "YearlongPerformance"
       print_top_8
       print_bottom_8
     else
@@ -91,15 +92,15 @@ class ReportPdf < Prawn::Document
   end
 
   def print_numeric_answers(question)
-    question_num = @questions.index(question)+1
+    question_num = @questions.index(question) + 1
     bounding_box [0, @block_start + 50], width: PAGE_WIDTH do
-       text "\n\n#{question_num}. #{question.self_description}", :style=>:bold
+      text "\n\n#{question_num}. #{question.self_description}", style: :bold
     end
-    bounding_box [ 0, @block_start - 100 ], width: PAGE_WIDTH do
+    bounding_box [0, @block_start - 100], width: PAGE_WIDTH do
       draw_endpoints
       answers = @results.numeric_answers_for_q(question.id)
       draw_histogram @results.histogram_for_q(answers)
-      draw_text "Self Score: %0.1f" % @results.self_score_for_q(question.id), at: [ 0, LAYOUT_LINE*2 ], size: 10
+      draw_text "Self Score: %0.1f" % @results.self_score_for_q(question.id), at: [0, LAYOUT_LINE * 2], size: 10
       mean_score = @results.mean_score_for_q(answers)
       if mean_score
         info = {
@@ -108,20 +109,19 @@ class ReportPdf < Prawn::Document
           description: question.self_description
         }
         @mean_scores.push(info)
-        draw_text "Average score: %0.1f" % mean_score, at: [ 0, LAYOUT_LINE*3 ], size: 10
+        draw_text "Average score: %0.1f" % mean_score, at: [0, LAYOUT_LINE * 3], size: 10
       else
-        draw_text "Average score:", at: [ 0, LAYOUT_LINE*3 ], size: 10
+        draw_text "Average score:", at: [0, LAYOUT_LINE * 3], size: 10
       end
       rw_quartile = @results.rw_quartile(question.id, mean_score)
       if rw_quartile
-        draw_text "Rockwood quartile: #{rw_quartile}", :at=>[ 350, LAYOUT_LINE*3 ], :size => 10
+        draw_text "Rockwood quartile: #{rw_quartile}", at: [350, LAYOUT_LINE * 3], size: 10
       end
     end
-
   end
 
   def print_text_answers(question)
-    text "\n\n#{@questions.index(question)+1}. #{question.self_description}", :style=>:bold
+    text "\n\n#{@questions.index(question) + 1}. #{question.self_description}", style: :bold
     text_answers = @results.text_answers_for_q(question.id)
     text_answers.each do |answer|
       text "- " + answer + "\n\n" unless answer.nil?
@@ -132,11 +132,11 @@ class ReportPdf < Prawn::Document
 
   def print_top_8
     text "\nTop 8 Scores:", style: :bold, size: 14
-    print_q_summary @mean_scores.first(8) 
+    print_q_summary @mean_scores.first(8)
   end
 
   def print_bottom_8
-    text "\nBottom 8 Scores:", :style=>:bold, :size => 14
+    text "\nBottom 8 Scores:", style: :bold, size: 14
     print_q_summary @mean_scores.last(8).reverse
   end
 
@@ -146,13 +146,13 @@ class ReportPdf < Prawn::Document
   end
 
   def print_bottom_4
-    text "\nBottom 4 Scores:", :style=>:bold, :size => 14
+    text "\nBottom 4 Scores:", style: :bold, size: 14
     print_q_summary @mean_scores.last(4).reverse
   end
 
   def print_q_summary(scores)
     scores.each do |q|
-      text "\n#%s. (%0.1f) %s" % [ q[:position], q[:mean_score], q[:description] ]
+      text "\n#%s. (%0.1f) %s" % [q[:position], q[:mean_score], q[:description]]
     end
   end
 
@@ -164,11 +164,10 @@ class ReportPdf < Prawn::Document
   def draw_histogram(histogram)
     line_width(2)
     1.upto(10) do |x|
-      draw_text "#{x.to_s}", at: [LAYOUT_SCALE * x, LAYOUT_LINE * 5]
+      draw_text "#{x}", at: [LAYOUT_SCALE * x, LAYOUT_LINE * 5]
       if histogram[x] > 0
-        draw_text "{#{histogram[x]}}", at: [LAYOUT_SCALE * x, LAYOUT_LINE * 6], style: :bold, size: 10 
+        draw_text "{#{histogram[x]}}", at: [LAYOUT_SCALE * x, LAYOUT_LINE * 6], style: :bold, size: 10
       end
     end
   end
-
 end

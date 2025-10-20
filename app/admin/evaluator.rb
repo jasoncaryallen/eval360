@@ -13,6 +13,7 @@ ActiveAdmin.register Evaluator do
       participant = evaluator.evaluation.participant
       redirect_to admin_training_participant_path(participant.training, participant)
     end
+
     def show
       evaluator = Evaluator.find(params[:id])
       participant = evaluator.evaluation.participant
@@ -25,6 +26,6 @@ ActiveAdmin.register Evaluator do
       f.input :email
       f.input :declined, label: "Declined to do a peer assessment (if checked)"
     end
-    f.actions 
+    f.actions
   end
 end

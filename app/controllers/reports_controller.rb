@@ -1,10 +1,10 @@
 class ReportsController < ApplicationController
-  layout 'report'
+  layout "report"
 
   def show
     if participant.training.questionnaire.name == Rails.configuration.x.loi
       @report = LoiReport.new(participant)
-      render 'loi_report'
+      render "loi_report"
     else
       @report = Report.new(participant)
     end
@@ -14,7 +14,7 @@ class ReportsController < ApplicationController
     question = Question.find(params[:question_id])
     if question
       @histogram = Histogram.new(participant, question)
-      render :partial => "histogram"
+      render partial: "histogram"
     end
   end
 

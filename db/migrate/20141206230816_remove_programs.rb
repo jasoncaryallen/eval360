@@ -8,7 +8,7 @@ class RemovePrograms < ActiveRecord::Migration[5.0]
   def down
     create_table :programs do |t|
       t.string :name
-    end 
+    end
     add_column :questionnaires, :program_id
     add_column :trainings, :program_id
   end

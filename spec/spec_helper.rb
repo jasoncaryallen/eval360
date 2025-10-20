@@ -1,19 +1,18 @@
-require 'simplecov'
-SimpleCov.start 'rails'
+require "simplecov"
+SimpleCov.start "rails"
 
-require 'delayed_job'
+require "delayed_job"
 Delayed::Worker.delay_jobs = false
 
-require 'webmock/rspec'
-WebMock.disable_net_connect!(:allow => "codeclimate.com")
+require "webmock/rspec"
+WebMock.disable_net_connect!(allow: "codeclimate.com")
 
-require 'factory_bot_rails'
-require 'database_cleaner'
-require 'active_record'
-require 'bullet'
+require "factory_bot_rails"
+require "database_cleaner"
+require "active_record"
+require "bullet"
 
 RSpec.configure do |config|
-
   config.expect_with :rspec do |expectations|
     # Enable only the newer, non-monkey-patching expect syntax.
     # For more details, see:
@@ -22,8 +21,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    body = [{'email'=>'person1@example.com', 'status'=>'sent', '_id'=>'77bcd', 'reject_reason'=>nil}]
-    stub_request(:post, "https://mandrillapp.com/api/1.0/messages/send-template.json").to_return(:status => 200, :body => body.to_json, :headers => {})
+    body = [{"email" => "person1@example.com", "status" => "sent", "_id" => "77bcd", "reject_reason" => nil}]
+    stub_request(:post, "https://mandrillapp.com/api/1.0/messages/send-template.json").to_return(status: 200, body: body.to_json, headers: {})
   end
 
   config.before(:suite) do
@@ -54,6 +53,6 @@ RSpec.configure do |config|
 end
 
 RSpec::Core::MemoizedHelpers.module_eval do
-  alias to should
-  alias to_not should_not
+  alias_method :to, :should
+  alias_method :to_not, :should_not
 end
