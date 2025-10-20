@@ -14,8 +14,7 @@ gem 'devise'
 gem 'activeadmin'
 gem 'active_record-acts_as'
 gem 'MailchimpTransactional'
-gem 'formtastic', '~> 3.1.5' # formtastic-bootstrap stopped development against 3.x :(
-gem 'formtastic-bootstrap'
+gem 'formtastic'
 gem "cocoon"
 gem 'bugsnag'
 gem 'prawn'
