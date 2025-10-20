@@ -5,6 +5,10 @@ class Training < ActiveRecord::Base
 
   validates_presence_of :questionnaire
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w(name start_date end_date city state status)
+  end
+
   def self.send_self_eval_reminders
     email_block do |participant|
       participant.remind unless participant.self_evaluation.completed?
