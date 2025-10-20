@@ -35,7 +35,7 @@ class EvaluationsController < ApplicationController
         numeric_response: nil).any?
         flash[:error] = ["Please respond to every question"]
         flash[:unanswered] = true
-        redirect_back fallback_location: root_path and return
+        redirect_back_or_to root_path and return
       end
     end
 

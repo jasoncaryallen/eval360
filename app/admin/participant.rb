@@ -35,7 +35,7 @@ ActiveAdmin.register Participant do
     else
       "Error sending reminder"
     end
-    redirect_back fallback_location: root_path
+    redirect_back_or_to root_path
   end
 
   member_action :remind_peers, method: :get do
@@ -43,7 +43,7 @@ ActiveAdmin.register Participant do
     participant.remind_to_remind_peers
     flash[:notice] = "Reminder sent"
 
-    redirect_back fallback_location: root_path
+    redirect_back_or_to root_path
   end
 
   member_action :download_evaluators, method: :get do

@@ -36,5 +36,9 @@ module Eval360
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Only enable once fully upgraded
+    # config.active_support.cache_format_version = 7.0
+    config.active_support.disable_to_s_conversion = true
   end
 end
