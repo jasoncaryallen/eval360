@@ -12,28 +12,34 @@ describe EvaluationEmailer do
       @training.participants.create(email: "email1#{Time.now}")
       @training.participants.create(email: "email2#{Time.now}")
       allow_any_instance_of(Evaluation).to receive(:completed?) { true }
-      allow(File).to receive(:open) { File.new("test", "w+") }
+      # Instead of creating real files, stub Zip::File.open so no filesystem IO is required.
+      # also stub add so calls to zipfile.add won't raise
+      fake_zip = double("zip")
+      allow(Zip::File).to receive(:open).and_yield(fake_zip)
+      allow(fake_zip).to receive(:add)
+
+      # stub File.read for the expected zip path to return dummy binary data
+      zip_path = Rails.root.join("tmp", "pdfs", "#{@training.id}.zip").to_s
+      allow(File).to receive(:read).with(zip_path).and_return("dummy-zip-bytes")
     end
 
     after do
       EvaluationEmailer.send_pdf_reports(@training.id, "example.com")
-      FileUtils.rm("test")
     end
 
     it "creates a pdf for each training participant" do
       expect(ReportPdf).to receive(:new).exactly(@training.participants.count).times { Prawn::Document.new }
     end
 
-    # TODO: Base64.decode64(nil) 'unpack' doesn't work for nil - problem happened when adding a ttf font. Comment this out to see if it works and test is broken.
-    # it 'creates a zip file' do
-    #   expect(Zip::File).to receive(:open) { Prawn::Document.new }
-    # end
+    it "creates a zip file" do
+      expect(Zip::File).to receive(:open) { Prawn::Document.new }
+    end
 
-    # it 'emails the zip file' do
-    #   mandrill = MailchimpTransactional::Client.new "test"
-    #   allow(EvaluationEmailer).to receive(:mandrill) { mandrill }
-    #   expect(mandrill).to receive_message_chain(:messages, :send)
-    # end
+    it "emails the zip file" do
+      mandrill = MailchimpTransactional::Client.new "test"
+      allow(EvaluationEmailer).to receive(:mandrill) { mandrill }
+      expect(mandrill).to receive_message_chain(:messages, :send)
+    end
   end
 
   describe ".remind_peers_reminder" do
